@@ -1,31 +1,69 @@
 #include <iostream>
-#include <stack>
 using namespace std;
 
+#define MAX 100
+
+// User-defined stack class for characters
+class CharStack {
+    char arr[MAX];
+    int top;
+
+public:
+    CharStack() {
+        top = -1;
+    }
+
+    void push(char ch) {
+        if (top == MAX - 1) {
+            cout << "Stack Overflow\n";
+            return;
+        }
+        arr[++top] = ch;
+    }
+
+    char pop() {
+        if (top == -1) {
+            cout << "Stack Underflow\n";
+            return '\0';
+        }
+        return arr[top--];
+    }
+
+    char peek() {
+        if (top == -1) {
+            return '\0';
+        }
+        return arr[top];
+    }
+
+    bool isEmpty() {
+        return top == -1;
+    }
+};
+
 int main() {
-    stack<char> st;
+    CharStack st;
     string str, reversed;
 
     cout << "Enter string: ";
     getline(cin, str);  // Read full line including spaces
 
-    // Push characters into stack using while loop
+    // Push each character into the user-defined stack
     int i = 0;
     while (str[i] != '\0') {
         st.push(str[i]);
         i++;
     }
 
-    // Pop characters to form the reversed string
+    // Pop from stack and form reversed string
     cout << "\nReversed string is: ";
-    while (!st.empty()) {
-        char ch = st.top();
+    while (!st.isEmpty()) {
+        char ch = st.pop();
         cout << ch;
         reversed += ch;
-        st.pop();
     }
 
-    // Check if the original string is the same as reversed
+    // Check for palindrome
     if (str == reversed) {
         cout << "\n\nThe string is a palindrome." << endl;
     } else {
@@ -34,4 +72,3 @@ int main() {
 
     return 0;
 }
-
